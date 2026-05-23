@@ -49,10 +49,10 @@ public class Task1 {
 // 6. Remove duplicate elements form a list using stream.
 
 		list3.stream().distinct().forEach(a -> System.out.print(a + " "));
+		System.out.println();
 
 // 7. Convert a list of strings into a single comma-separated string.
 
-		System.out.println();
 
 // 8. Given a list of employees ,get all employees names.
 
@@ -121,6 +121,7 @@ public class Task1 {
 		System.out.println(duplicate);
 
 // 19. Find the most frequent element in a list.
+		
 
 // 20. Partition numbers into even and odd groups.
 
