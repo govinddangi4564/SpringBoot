@@ -13,8 +13,16 @@ public class Task1 {
 		Session s = sf.openSession();
 		s.beginTransaction();
 		
-		Employee em = new Employee("Honey", 20, 9999999.0, "honey@gmail.com");
-		s.persist(em);
+//		Employee em = new Employee("Sunil",20, 900000.0, "sunil@gmail.com");
+//		s.persist(em);
+		
+		Employee em = s.get(Employee.class, 2);
+//		s.remove(em);
+		
+//		em.setSalary(550000);
+		
+		System.out.println(em);
+		
 		
 		s.getTransaction().commit();
 		
