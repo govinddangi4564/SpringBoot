@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.id.factory.spi.GeneratorDefinitionResolver;
 
 import entity.Doctor;
 import entity.Gender;
@@ -17,8 +16,8 @@ public class DoctorMain {
 		Session s = sf.openSession();
 		s.beginTransaction();
 
-		Doctor d = new Doctor("Mohit", 20, LocalDate.of(2003, 07, 21), 101, "Nothing", Gender.Male, "mohit@gmail.com",
-				"963258965");
+		Doctor d = new Doctor("Jay", 21, LocalDate.of(2003, 5, 22), 101, "Heart", Gender.Male, "jay12@gmail.com",
+				"7896321455");
 		
 		s.persist(d);
 		
