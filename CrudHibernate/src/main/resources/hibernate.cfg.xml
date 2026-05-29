@@ -18,6 +18,7 @@
 		<mapping class="entity.Doctor" />
 		<mapping class="entity.Customer" />
 		<mapping class="entity.Books" />
+		<mapping class="entity.Accounts" />
 
 	</session-factory>
 </hibernate-configuration>
