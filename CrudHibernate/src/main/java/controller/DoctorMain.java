@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 import dto.DoctorInfo;
 import entity.Doctor;
@@ -32,12 +33,23 @@ public class DoctorMain {
 //		List<Doctor> list = s.createQuery("from Doctor where name like '%Jay%'", Doctor.class).list();
 //		list.stream().forEach(a -> System.out.println(a));
 		
-		List<DoctorInfo> list = s.createQuery("select name, phone, email from Doctor", DoctorInfo.class).list();
-		list.stream().forEach(a -> System.out.println(a));
+//		List<DoctorInfo> list = s.createQuery("select name, phone, email from Doctor", DoctorInfo.class).list();
+//		list.stream().forEach(a -> System.out.println(a));
+		
+//		List<String> list = s.createQuery("select name from Doctor", String.class).list();
+//		list.stream().forEach(a -> System.out.println(a));
 
 //		List<Doctor> list = s.createQuery("from Doctor order by name desc", Doctor.class).list();
 //		list.stream().forEach(a -> System.out.println(a));
 
+		
+		Query<Doctor> q = s.createQuery("from Doctor d where d.name = :name", Doctor.class);
+		q.setParameter("name", "JAY");
+		
+		List<Doctor> list1  = q.list();
+		list1.stream().forEach(a -> System.out.println(a));
+		
+		
 		s.getTransaction().commit();
 
 		s.close();
