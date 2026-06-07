@@ -20,6 +20,11 @@
 		<mapping class="entity.Books" />
 		<mapping class="entity.Accounts" />
 		<mapping class="entity.Customers" />
+		<mapping class="entity.Person" />
+		<mapping class="entity.Passport" />
+		<mapping class="entity.Student" />
+		<mapping class="entity.Address" />
+		<mapping class="entity.Marks" />
 
 	</session-factory>
 </hibernate-configuration>
