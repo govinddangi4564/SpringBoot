@@ -25,6 +25,8 @@
 		<mapping class="entity.Student" />
 		<mapping class="entity.Address" />
 		<mapping class="entity.Marks" />
+		<mapping class="entity.Users" />
+		<mapping class="entity.Orders" />
 
 	</session-factory>
 </hibernate-configuration>

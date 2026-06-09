@@ -1,8 +1,12 @@
-package entity;
+package controller;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+
+import entity.Address;
+import entity.Marks;
+import entity.Student;
 
 public class StudentMain {
 	public static void main(String[] args) {
