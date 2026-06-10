@@ -2,33 +2,30 @@ package entity;
 
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.Email;
+import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-public class Users {
+@ToString(exclude = "employees")
+public class Projects {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String name;
-	@Email
-	@Column(nullable = false, unique = true)
-	private String email;
-	
-	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
-	private List<Orders> orders;
-	
-	transient private double totalAmount;
+	@Column(nullable = false)
+	private String projectName;
+
+	@ManyToMany(mappedBy = "projects")
+	private List<Employees> employees;
+
 }

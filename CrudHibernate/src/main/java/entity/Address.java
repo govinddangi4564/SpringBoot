@@ -10,11 +10,13 @@ import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString(exclude = "student")
 public class Address {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

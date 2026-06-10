@@ -27,6 +27,8 @@
 		<mapping class="entity.Marks" />
 		<mapping class="entity.Users" />
 		<mapping class="entity.Orders" />
+		<mapping class="entity.Projects" />
+		<mapping class="entity.Employees" />
 
 	</session-factory>
 </hibernate-configuration>
