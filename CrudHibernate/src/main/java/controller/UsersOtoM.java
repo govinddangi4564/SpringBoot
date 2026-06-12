@@ -9,7 +9,7 @@ import org.hibernate.cfg.Configuration;
 import entity.Orders;
 import entity.Users;
 
-public class UsersMain {
+public class UsersOtoM {
 	public static void main(String[] args) {
 		SessionFactory sf = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
 		Session s = sf.openSession();
@@ -31,15 +31,9 @@ public class UsersMain {
 //		s.persist(u);
 
 		Users us = s.get(Users.class, 1);
-		System.out.println(us.getName() + "  " + us.getEmail());
+		System.out.println("Name : " + us.getName() + "\nEmail : " + us.getEmail());
 		us.getOrders().stream().forEach(System.out::println);
-		
-//		Orders o = s.get(Orders.class, 1);
-//		int q = o.getQuantity();
-//		double p = o.getPrice();
-//		
-//		double t = q*p;
-//		System.out.println("Total: " + t);
+		System.out.println("\nTotal Bill : " + us.getTotalAmount());
 
 		s.getTransaction().commit();
 		sf.close();
