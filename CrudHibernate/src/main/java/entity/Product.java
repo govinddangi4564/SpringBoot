@@ -1,15 +1,12 @@
 package entity;
 
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.Email;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,22 +15,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Users {
+@Table(name = "product", indexes = { @Index(name = "idx_brand_name", columnList = "brand, name") })
+public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	@Email
+	private String brand;
 	@Column(nullable = false, unique = true)
-	private String email;
+	private String category;
+	private Double price;
 
-	@OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
-	private List<Orders> orders;
-
-//	@Transient
-//	private double totalAmount;
-
-	public double getTotalAmount() {
-		return orders.stream().mapToDouble(a -> a.getPrice() * a.getQuantity()).sum();
+	public Product(String name, String brand, String category, Double price) {
+		super();
+		this.name = name;
+		this.brand = brand;
+		this.category = category;
+		this.price = price;
 	}
+
 }

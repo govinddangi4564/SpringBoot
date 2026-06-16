@@ -29,6 +29,7 @@
 		<mapping class="entity.Orders" />
 		<mapping class="entity.Projects" />
 		<mapping class="entity.Employees" />
+		<mapping class="entity.Product" />
 
 	</session-factory>
 </hibernate-configuration>
