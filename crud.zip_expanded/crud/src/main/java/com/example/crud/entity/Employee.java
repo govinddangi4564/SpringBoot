@@ -20,7 +20,11 @@ public class Employee {
 	
 	@Column(nullable = false)
 	private String name;
-	private Integer age;
 	private Double salary;
-	private Department department;
+
+	@Column(nullable = false, unique = true)
+	private String email;
+	
+	private String gender;
+	private Integer age;
 }
