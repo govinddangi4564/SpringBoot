@@ -68,7 +68,7 @@ public class LibraryService {
 	@Transactional
 	public BookIssueRecord returnBook(ReturnRequest request) {
 		Book book = bookRepo.findById(request.getBookId())
-				.orElseThrow(() -> new RuntimeException("Book not fount with ID: " + request.getBookId()));
+				.orElseThrow(() -> new RuntimeException("Book not found with ID: " + request.getBookId()));
 
 		Student student = studentRepo.findById(request.getStudentId())
 				.orElseThrow(() -> new RuntimeException("Student not found with ID: " + request.getStudentId()));
