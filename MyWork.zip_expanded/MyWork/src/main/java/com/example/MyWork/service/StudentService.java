@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 import com.example.MyWork.Exception.ResourceNotFound;
 import com.example.MyWork.dto.StudentDetailsShowResponse;
 import com.example.MyWork.dto.StudentUpdateRequest;
+import com.example.MyWork.entity.Department;
 import com.example.MyWork.entity.Student;
+import com.example.MyWork.repository.DepartmentRepository;
 import com.example.MyWork.repository.StudentRepository;
 
 @Service
@@ -21,6 +23,9 @@ public class StudentService {
 
 	@Autowired
 	private StudentRepository studentRepo;
+
+	@Autowired
+	private DepartmentRepository departmentRepo;
 
 	// INSERT
 	public Student save(Student st) {
@@ -77,6 +82,18 @@ public class StudentService {
 	public List<Student> sort(String field, String direction) {
 		Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(field).descending() : Sort.by(field).ascending();
 		return studentRepo.findAll(sort);
+	}
+
+	// ===============================================================================================================
+
+	// Save Department Student
+	public Student saveStudent(Student student) {
+		Long deptId = student.getDepartment().getId();
+
+		Department department = departmentRepo.findById(deptId).orElseThrow(() -> new RuntimeException("Not found"));
+
+		student.setDepartment(department);
+		return studentRepo.save(student);
 	}
 
 }
