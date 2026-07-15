@@ -1,5 +1,6 @@
 package com.example.paginationOrException.service;
 
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +28,7 @@ public class CustomerService {
 		return repo.findById(id).orElseThrow(() -> new CustomerNotFound("Customers not found : " + id));
 	}
 
+	@CachePut(value = "customers", key = "#id")
 	public Customers updatCustomers(Long id, Customers cus) {
 		Customers c = repo.findById(id).orElseThrow(() -> new CustomerNotFound("Customer not found : " + id));
 		c.setEmail(cus.getEmail());
