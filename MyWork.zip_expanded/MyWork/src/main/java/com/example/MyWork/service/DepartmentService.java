@@ -29,9 +29,9 @@ public class DepartmentService {
 		return departmentRepo.findAll();
 	}
 
-	public List<DepartmentViewResponse> viewDepartment() {
+	public List<Department> viewDepartment() {
 		List<Department> department = departmentRepo.findAll();
-		
-		return 
+
+		return departmentRepo.findAll();
 	}
 }
