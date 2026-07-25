@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.thymeleaf.entity.User;
 
-@Controller
+@Controller // Cotroller for redirect to the html page, it is not rest api
 @RequestMapping("/student")
 public class SimpleController {
 //	@GetMapping("/home")
