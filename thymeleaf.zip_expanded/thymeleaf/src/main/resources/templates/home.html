@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h1>This is normal html page</h1>
+	
+	<!--  <h1 th:text=${name}></h1> -->
+	
+	<!-- <div th:object=${user}>
+		<h1>id : <span th:text="*{id}"></span></h1>
+		<h1>Name : <span th:text="*{name}"></span></h1>
+		<h1>email : <span th:text="*{email}"></span></h1>
+		<h1>username : <span th:text="*{username}"></span></h1>
+	</div>
+	
+	<h1 th:text=${user.name}></h1>  -->
+	
+	<div th:each="u, i : ${user}">
+		<h1>Id: <span th:text=${u.id}></span> </h1>
+		<h1>Name: <span th:text=${u.name}></span> </h1>
+		<h1>email: <span th:text=${u.email}></span> </h1>
+		<h1>username: <span th:text=${u.username}></span> </h1>
+		<hr>
+	</div>
+
+</body>
+</html>
