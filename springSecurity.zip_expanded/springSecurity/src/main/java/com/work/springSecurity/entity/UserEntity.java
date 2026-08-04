@@ -33,6 +33,7 @@ public class UserEntity {
 	private Long id;
 	@Column(nullable = false, unique = true)
 	private String username;
+	private String name;
 	private String password;
 
 	@Column(nullable = false, unique = true)
