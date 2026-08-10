@@ -1,4 +1,4 @@
-package com.example.jwtWork.config;
+package com.example.jwtEmailWork.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.example.jwtWork.service.CustomUserDetailsService;
+import com.example.jwtEmailWork.service.CustomUserDetailsService;
 
 import lombok.AllArgsConstructor;
 

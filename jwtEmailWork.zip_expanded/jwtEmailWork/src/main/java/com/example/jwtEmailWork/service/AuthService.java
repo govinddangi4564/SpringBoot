@@ -1,4 +1,4 @@
-package com.example.jwtWork.service;
+package com.example.jwtEmailWork.service;
 
 import java.util.List;
 import java.util.Set;
@@ -13,13 +13,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.jwtWork.config.JwtUtils;
-import com.example.jwtWork.dto.JwtResponse;
-import com.example.jwtWork.dto.LoginRequest;
-import com.example.jwtWork.dto.RegisterRequest;
-import com.example.jwtWork.entity.Role;
-import com.example.jwtWork.entity.UserEntity;
-import com.example.jwtWork.repository.UserEntityRepository;
+import com.example.jwtEmailWork.config.JwtUtils;
+import com.example.jwtEmailWork.dto.JwtResponse;
+import com.example.jwtEmailWork.dto.LoginRequest;
+import com.example.jwtEmailWork.dto.RegisterRequest;
+import com.example.jwtEmailWork.entity.Role;
+import com.example.jwtEmailWork.entity.UserEntity;
+import com.example.jwtEmailWork.repository.UserEntityRepository;
 
 import lombok.RequiredArgsConstructor;
 

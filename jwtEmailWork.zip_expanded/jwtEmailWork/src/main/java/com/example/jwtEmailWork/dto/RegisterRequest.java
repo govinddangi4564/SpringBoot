@@ -1,4 +1,4 @@
-package com.example.jwtWork.dto;
+package com.example.jwtEmailWork.dto;
 
 import lombok.Data;
 
