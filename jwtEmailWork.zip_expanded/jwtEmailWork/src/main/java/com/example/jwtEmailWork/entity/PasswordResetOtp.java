@@ -21,10 +21,7 @@ public class PasswordResetOtp {
 	private Long id;
 
 	private String email;
-
 	private String otp;
-
 	private LocalDateTime expiresAt;
-
 	private boolean used = false;
 }

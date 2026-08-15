@@ -27,16 +27,16 @@ public class SecurityConfig {
 
 	private CustomUserDetailsService userDetails;
 	private JwtAuthenticationFilter jwtAuthenticationFilter;
+	private JwtAuthEntryPoint jwtAuthEntryPoint;
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
-	public AuthenticationManager authenticationManager(
-	        AuthenticationConfiguration configuration) throws Exception {
-	    return configuration.getAuthenticationManager();
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+		return configuration.getAuthenticationManager();
 	}
 
 	@Bean
@@ -50,6 +50,7 @@ public class SecurityConfig {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.exceptionHandling(ex -> ex.authenticationEntryPoint(jwtAuthEntryPoint))
 				.authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**", "/public/**").permitAll()
 						.requestMatchers(HttpMethod.GET, "/api/products/**").hasAnyRole("USER", "ADMIN")
 						.requestMatchers(HttpMethod.POST, "/api/products/**").hasRole("ADMIN")

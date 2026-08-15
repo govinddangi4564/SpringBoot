@@ -13,8 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@
-Table(name = "Products1")
+@Table(name = "Products1")
 public class Products {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +23,5 @@ public class Products {
 	private Integer stockQuantity;
 	private String url;
 	private String publicId;
+	private String resourceType;
 }

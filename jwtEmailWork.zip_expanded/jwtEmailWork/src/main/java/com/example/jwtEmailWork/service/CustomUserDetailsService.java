@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.jwtEmailWork.entity.UserEntity;
 import com.example.jwtEmailWork.repository.UserEntityRepository;
@@ -23,16 +24,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 	private UserEntityRepository repo;
 
 	@Override
+	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
+
 		UserEntity u = repo.findByUsername(username).orElseThrow();
-		
-		Set<GrantedAuthority> authorities = u.getRoles().stream().map(
-				a -> new SimpleGrantedAuthority(a.name())
-				).collect(Collectors.toSet());
-		
+
+		Set<GrantedAuthority> authorities = u.getRoles().stream().map(a -> new SimpleGrantedAuthority(a.name()))
+				.collect(Collectors.toSet());
+
 		return new User(u.getUsername(), u.getPassword(), authorities);
 	}
-
 
 }
