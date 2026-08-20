@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Simple Spring Boot WebSocket Chat</title>
+
+<!-- SockJS and STOMP Client Libraries from CDN -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f2f4f7;
+	margin: 40px;
+}
+
+.chat-box {
+	max-width: 500px;
+	margin: 0 auto;
+	background: #ffffff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+	margin-top: 0;
+	color: #333;
+}
+
+.user-info {
+	color: #007bff;
+	font-weight: bold;
+}
+
+#messageArea {
+	list-style-type: none;
+	padding: 10px;
+	height: 250px;
+	overflow-y: auto;
+	border: 1px solid #ddd;
+	background: #fafafa;
+	border-radius: 5px;
+}
+
+#messageArea li {
+	padding: 6px 10px;
+	margin-bottom: 8px;
+	background: #ffffff;
+	border-left: 4px solid #007bff;
+	border-radius: 3px;
+}
+
+#messageArea li.system-message {
+	border-left-color: #ffc107;
+	background: #fff8e1;
+	font-style: italic;
+}
+
+.input-group {
+	display: flex;
+	gap: 10px;
+	margin-top: 15px;
+}
+
+input[type="text"] {
+	flex: 1;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+button {
+	padding: 10px 18px;
+	background-color: #28a745;
+	color: white;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+button:hover {
+	background-color: #218838;
+}
+</style>
+</head>
+<body>
+
+	<div class="chat-box">
+		<h2>Live Spring Boot Chat</h2>
+
+		<!-- 1. THYMELEAF DYNAMIC USERNAME DISPLAY -->
+		<p>
+			Logged in as: <span class="user-info" th:text="${username}">Guest</span>
+		</p>
+
+		<!-- 2. MESSAGES CONTAINER -->
+		<ul id="messageArea"></ul>
+
+		<!-- 3. INPUT FORM -->
+		<div class="input-group">
+			<input type="text" id="messageInput"
+				placeholder="Type your message..." onkeypress="handleKey(event)" />
+			<button onclick="sendMessage()">Send</button>
+		</div>
+	</div>
+
+	<!-- 4. THYMELEAF JAVASCRIPT INLINING -->
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+
+		// Read the username variable passed from Spring Boot via Thymeleaf!
+		const username = /*[[${username}]]*/'Guest';
+
+		let stompClient = null;
+
+		// Connect to WebSocket Server when page loads
+		function connect() {
+			// Connect to the endpoint defined in WebSocketConfig.java (/ws)
+			const socket = new SockJS('/ws');
+			stompClient = Stomp.over(socket);
+
+			stompClient.connect({}, onConnected, onError);
+		}
+
+		// Called when WebSocket connection is successful
+		function onConnected() {
+			console.log("Connected as: " + username);
+
+			// Subscribe to the public topic to receive messages
+			stompClient.subscribe('/topic/public', onMessageReceived);
+
+			// Inform the server that a new user joined
+			stompClient.send("/app/chat.addUser", {}, JSON.stringify({
+				sender : username,
+				type : 'JOIN'
+			}));
+		}
+
+		function onError(error) {
+			console.error("Could not connect to WebSocket:", error);
+		}
+
+		// Send chat message to backend
+		function sendMessage() {
+			const input = document.getElementById('messageInput');
+			const messageText = input.value.trim();
+
+			if (messageText && stompClient) {
+				const chatMessage = {
+					sender : username,
+					content : messageText,
+					type : 'CHAT'
+				};
+
+				// Send message to @MessageMapping("/chat.sendMessage") in ChatController.java
+				stompClient.send("/app/chat.sendMessage", {}, JSON
+						.stringify(chatMessage));
+				input.value = ''; // Clear input box
+			}
+		}
+
+		// Enter key support
+		function handleKey(event) {
+			if (event.key === 'Enter') {
+				sendMessage();
+			}
+		}
+
+		// Called whenever a message is received from backend (/topic/public)
+		function onMessageReceived(payload) {
+			const message = JSON.parse(payload.body);
+			const messageArea = document.getElementById('messageArea');
+			const li = document.createElement('li');
+
+			if (message.type === 'JOIN') {
+				li.classList.add('system-message');
+				li.textContent = message.content;
+			} else {
+				li.innerHTML = "<b>" + escapeHtml(message.sender) + ":</b> "
+						+ escapeHtml(message.content);
+			}
+
+			messageArea.appendChild(li);
+			messageArea.scrollTop = messageArea.scrollHeight; // Auto-scroll to bottom
+		}
+
+		// Helper to prevent HTML Injection attack (XSS safety)
+		function escapeHtml(text) {
+			return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(
+					/>/g, "&gt;");
+		}
+
+		// Automatically run connect() when HTML DOM loading is complete
+		document.addEventListener("DOMContentLoaded", function() {
+			connect();
+		});
+
+		/*]]>*/
+	</script>
+
+</body>
+</html>
